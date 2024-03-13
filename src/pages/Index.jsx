@@ -12,26 +12,9 @@ const Index = () => {
 
   const getVideoStream = async () => {
     try {
-      if (navigator && navigator.mediaDevices) {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play().catch((error) => {
-            console.error("Error attempting to play the video stream.", error);
-            toast({
-              title: "Error",
-              description: "There was an issue playing the video stream.",
-              status: "error",
-              duration: 5000,
-              isClosable: true,
-            });
-          });
-        } else {
-          throw new Error("Video reference is not available.");
-        }
-      } else {
-        throw new Error("MediaDevices not supported.");
-      }
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+      videoRef.current.play();
       setStreamStarted(true);
     } catch (error) {
       toast({
